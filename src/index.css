@@ -33,3 +33,7 @@ code {
   flex-basis:100%;
   border: 2px #61dafb;
 }
+
+#base {
+  border-radius: 1rem;
+}

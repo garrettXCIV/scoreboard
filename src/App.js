@@ -108,7 +108,7 @@ function App({ signOut, user }) {
 
   return (
       <>
-        <div style={styles.container}>
+        <div id='base' style={styles.container}>
           <Collapsible
               trigger={<HeartIcon/>}
               triggerStyle={{display: 'block',
@@ -148,8 +148,8 @@ function App({ signOut, user }) {
             {
               players.map((player, index) => (
                   <div key={player.name ? player.name : index} style={styles.player}>
-                    <p style={{ fontSize: 20, fontWeight: 'bold', }}>
-                      <span style={{paddingRight: '1em'}}>{player.name}:</span>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', marginBlock: 0 }}>
+                      <span style={{paddingRight: '0.5em'}}>{player.name}:</span>
                       <span>{player.score}</span>
                       <span style={{display: 'flex', float: 'right', justifyContent: 'center'}}>
                   <Button style={styles.increment} onClick={() => incrementScore(player)}>+</Button>
@@ -167,7 +167,7 @@ function App({ signOut, user }) {
 
 const styles = {
   container: { width: 400, margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 20 },
-  player: {  marginBottom: 15 },
+  player: {  marginBottom: '0.8rem' },
   input: { border: 'none', backgroundColor: '#ddd', marginBottom: 10, padding: 8, fontSize: 18 },
   playerName: { fontSize: 20, fontWeight: 'bold' },
   playerScore: { marginBottom: 0 },
