@@ -5,6 +5,7 @@ export const getPlayer = /* GraphQL */ `
   query GetPlayer($id: ID!) {
     getPlayer(id: $id) {
       id
+      number
       name
       score
       createdAt
@@ -21,6 +22,7 @@ export const listPlayers = /* GraphQL */ `
     listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        number
         name
         score
         createdAt

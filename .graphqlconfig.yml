@@ -1,6 +1,6 @@
 projects:
   scoreboard:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/scoreboard/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

@@ -11,6 +11,8 @@ import { onUpdatePlayer } from './graphql/subscriptions';
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
+let playerCount = 0
+
 const initialState = { name: '', score: '' }
 
 function App({ signOut, user }) {
@@ -45,18 +47,19 @@ function App({ signOut, user }) {
     try {
       const playerData = await API.graphql(graphqlOperation(listPlayers))
       const players = playerData.data.listPlayers.items
-      setPlayers(players)
-    } catch (err) { console.log('error fetching players') }
+      const playersSorted = players.sort((a, b) => (a.number > b.number) ? 1 : -1)
+      setPlayers(playersSorted)
+    } catch (err) { console.log('error fetching players:', err) }
   }
 
   async function addPlayer() {
     try {
+      playerCount = ++playerCount
       if (!formState.name || !formState.score) return
-      const player = { ...formState }
+      const player = { ...formState, number: playerCount }
       setPlayers([...players, player])
       setFormState(initialState)
-      const a = await API.graphql(graphqlOperation(createPlayer, {input: player}))
-      console.log(a)
+      await API.graphql(graphqlOperation(createPlayer, {input: player}))
     } catch (err) {
       console.log('error creating player:', err)
     }
@@ -71,7 +74,8 @@ function App({ signOut, user }) {
           id: player?.id
         }
         await API.graphql({query: deletePlayer, variables: {input: playerId}});
-        await fetchPlayers()
+      await fetchPlayers()
+      playerCount = 0
       }
     } catch (err) {
       console.log('error deleting player:', err)
@@ -81,6 +85,7 @@ function App({ signOut, user }) {
   async function incrementScore(player) {
     try {
       const playerData = {
+        number: player.number,
         name: player.name,
         score: ++player.score,
         id: player.id
@@ -95,6 +100,7 @@ function App({ signOut, user }) {
   async function decrementScore(player) {
     try {
       const playerData = {
+        number: player.number,
         name: player.name,
         score: --player.score,
         id: player.id
@@ -181,7 +187,7 @@ const HeartIcon = () => (
         viewBox={{width: 24, height: 24}}
         pathData='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0
   3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
-    /> by BangCorp</span>
+    /> by Garrett</span>
 );
 
 export default withAuthenticator(App);

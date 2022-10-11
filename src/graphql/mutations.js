@@ -8,6 +8,7 @@ export const createPlayer = /* GraphQL */ `
   ) {
     createPlayer(input: $input, condition: $condition) {
       id
+      number
       name
       score
       createdAt
@@ -22,6 +23,7 @@ export const updatePlayer = /* GraphQL */ `
   ) {
     updatePlayer(input: $input, condition: $condition) {
       id
+      number
       name
       score
       createdAt
@@ -36,6 +38,7 @@ export const deletePlayer = /* GraphQL */ `
   ) {
     deletePlayer(input: $input, condition: $condition) {
       id
+      number
       name
       score
       createdAt
